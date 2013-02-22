@@ -1,0 +1,26 @@
+--- fs/super.c
++++ fs/super.c
+@@ -38,6 +38,7 @@
+ #include <linux/mutex.h>
+ #include <linux/file.h>
+ #include <asm/uaccess.h>
++#include <linux/cleancache.h>
+ #include "internal.h"
+ 
+ 
+@@ -104,6 +105,7 @@
+ 		s->s_qcop = sb_quotactl_ops;
+ 		s->s_op = &default_op;
+ 		s->s_time_gran = 1000000000;
++		s->cleancache_poolid = -1;
+ 	}
+ out:
+ 	return s;
+@@ -219,6 +221,7 @@
+ 		s->s_count -= S_BIAS-1;
+ 		spin_unlock(&sb_lock);
+ 		vfs_dq_off(s, 0);
++		cleancache_flush_fs(s);
+ 		fs->kill_sb(s);
+ 		put_filesystem(fs);
+ 		put_super(s);

@@ -1,0 +1,47 @@
+                                            Changelog for Vengeance Kernel
+                                               
+Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
+* Tipo ( Tapioca ) [GSM/GSM+GSM Model]
+* Miro ( Mesona )
+* J ( JLO )
+
+>----Version 1.31---- ( First release )
+> Code Sourcery Compiled
+> Based on latest sources by Sony
+> Xperia J and Tipo Overclocked to 1 GHz and 1.3 GHz respectively
+> Integrated CWM for all devices
+
+>----Version 1.32---- 
+> Linaro Optimized
+> Added OndemandX Governor
+> Added SIO and used it as default IOSCHED
+> Changes in init.rc and init.sh
+> New LED Pattern
+> Removed Userspace governor
+> Added NTFS, FUSE and CIFS
+> fs/dcache.c : Lowered vfs_cache_pressure to 50
+
+
+>----Version 1.33---- (JLO Only)
+> Add InteractiveX governor
+> acpuclock-7201.c Freq Table: Change 245700 to 246900
+> Changes in init.rc, init.sony.rc, init.sh
+> Default boot governor set to ondemand in init.sony.rc
+> Default boot frequencies set to 1008000 MAX - 249600 MIN (JLO)
+> Default boot frequencies set to 800000 MAX - 249600 MIN (Mesona & Tapioca)
+> Fixed JLO's dancing CWM
+> Fixed issues with CWM
+> Fixed Mesona : boot into ramdump mode
+> modules.zip : nls_utf8.ko, scsi_wait_scan.ko, md4.ko
+
+
+>----Version 1.34----
+> Based on 1.33
+> Compiled using stable CodeSourcery Toolchain
+> init.d Support
+> Fixed CWM issue with tipo
+> All modules zipped
+> Overall improved and stablized
+
+>----Version 1.35---- ( No changes for JLO )
+> Used separate source for Mesona, Tap_Dual, Tap_Single
