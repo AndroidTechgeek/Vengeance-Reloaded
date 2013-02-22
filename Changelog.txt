@@ -38,7 +38,6 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 >----Version 1.34----
 > Based on 1.33
 > Compiled using stable CodeSourcery Toolchain
-> init.d Support
 > Fixed CWM issue with tipo
 > All modules zipped
 > Overall improved and stablized
@@ -49,4 +48,5 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 >>----Version 1.36---- ( Under progress )
 > Linaro Optimised
 > Use ondemandX as default governor
+> init.d Support
 
