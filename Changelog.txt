@@ -49,4 +49,5 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Linaro Optimised
 > Use ondemandX as default governor
 > init.d Support
+> Changes in init.rc
 
