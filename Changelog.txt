@@ -40,14 +40,19 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Compiled using stable CodeSourcery Toolchain
 > Fixed CWM issue with tipo
 > All modules zipped
-> Overall improved and stablized
 
 >----Version 1.35---- ( No changes for JLO )
 > Used separate source for Mesona, Tap_Dual, Tap_Single
 
->>----Version 1.36---- ( Under progress )
+>>----Version 1.36---- 
 > Linaro Optimised
 > Use ondemandX as default governor
 > init.d Support
 > Changes in init.rc
 
+>>----Version 1.37---- 
+> Added VR IO-Scheduler
+> Added hotplug, smartassv2 and minmax governor
+> Added Google Snappy drivers
+> Added ZRAM support
+> Overall improved and stablized
