@@ -51,6 +51,7 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Changes in init.rc
 
 >>----Version 1.37---- 
+> Compiled using Linaro 4.7.3 Linaro 2013 Edition
 > Added VR IO-Scheduler
 > Added hotplug, smartassv2 and minmax governor
 > Added Google Snappy drivers
