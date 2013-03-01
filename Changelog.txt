@@ -57,3 +57,7 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Added Google Snappy drivers
 > Added ZRAM support
 > Overall improved and stablized
+
+>>----Version 1.38----
+> CWM fixes
+> New boot pattern for JLO  
