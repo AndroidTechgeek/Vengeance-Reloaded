@@ -68,6 +68,7 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 >>----Version 1.40---- WIP
 > Remove junks
 > Updated Linaro GCC to latest version released
+> Enable SWAP Support
 > Add ROW IOSCHED
 > Enable TINY RCU
 > Persistent adb is enabled
