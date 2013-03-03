@@ -61,3 +61,15 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 >>----Version 1.38----
 > CWM fixes
 > New boot pattern for JLO  
+
+>>----Version 1.39----
+> Skipped
+
+>>----Version 1.40---- WIP
+> Remove junks
+> Add ROW IOSCHED
+> Enable TINY RCU
+> Disable gentle fair sleepers
+> ARM: cpu topology: Enable ARCH_POWER
+> Optimize DeadLine
+> Remove + symbol from kernel version string
