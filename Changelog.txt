@@ -64,9 +64,10 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 >>----Version 1.39----
 > Skipped
 
->>----Version 1.40---- WIP
+>>----Version 1.40----
 > Remove junks
 > Add Dual recovery ( CWM + TWRP Touch )
+> Updated CWM version
 > Fix CWM backup and USB Mount storage
 > Updated Linaro GCC to latest version released
 > Add TUN.ko module
