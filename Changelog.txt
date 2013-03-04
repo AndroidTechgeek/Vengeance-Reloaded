@@ -70,6 +70,7 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Fix CWM backup and USB Mount storage
 > Updated Linaro GCC to latest version released
 > Add TUN.ko module
+> Debugging cleanup
 > Enable SWAP Support
 > Add ROW IOSCHED
 > Enable TINY RCU
@@ -79,5 +80,5 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > ARM: cpu topology: Enable ARCH_POWER
 > Optimize DeadLine
 > Remove + symbol from kernel version string
-> New boot pattern for JLO
+> New boot pattern for all devices
 > Overall improved and stabilized
