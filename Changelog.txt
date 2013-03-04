@@ -56,7 +56,6 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Added hotplug, smartassv2 and minmax governor
 > Added Google Snappy drivers
 > Added ZRAM support
-> Overall improved and stablized
 
 >>----Version 1.38----
 > CWM fixes
@@ -67,7 +66,10 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 
 >>----Version 1.40---- WIP
 > Remove junks
+> Add Dual recovery ( CWM + TWRP Touch )
+> Fix CWM backup and USB Mount storage
 > Updated Linaro GCC to latest version released
+> Add TUN.ko module
 > Enable SWAP Support
 > Add ROW IOSCHED
 > Enable TINY RCU
@@ -77,3 +79,5 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > ARM: cpu topology: Enable ARCH_POWER
 > Optimize DeadLine
 > Remove + symbol from kernel version string
+> New boot pattern for JLO
+> Overall improved and stabilized
