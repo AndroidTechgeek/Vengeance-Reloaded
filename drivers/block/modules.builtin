@@ -1,3 +1,0 @@
-kernel/drivers/block/loop.ko
-kernel/drivers/block/cryptoloop.ko
-kernel/drivers/block/ub.ko
