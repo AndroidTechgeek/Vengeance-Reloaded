@@ -99,7 +99,8 @@ int bq27520_get_polling_timeout(void);
 #define RPC_TYPE_REPLY   1
 #define RPC_REQ_REPLY_COMMON_HEADER_SIZE   (3 * sizeof(uint32_t))
 
-#if DEBUG
+#undef DEBUG
+#ifdef DEBUG
 #define DBG_LIMIT(x...) do {if (printk_ratelimit()) pr_debug(x); } while (0)
 #else
 #define DBG_LIMIT(x...) do {} while (0)
@@ -622,9 +623,9 @@ void msm_batt_update_psy_status(void)
 	u32	batt_capacity = 100;
 	u32	battery_flags = 0;
 	struct	power_supply	*supp;
-	unsigned long enter_time = jiffies;
+	//unsigned long enter_time = jiffies;
 
-    pr_info("%s %lu Enter\n", __func__, enter_time);
+    //pr_info("%s %lu Enter\n", __func__, enter_time);
         
     wake_lock_timeout(&msm_battery_wakelock, 3 * HZ);
 	if (msm_batt_get_batt_chg_status()) {
@@ -908,7 +909,7 @@ void msm_batt_update_psy_status(void)
 		lower_than_3p5_cnt_max = (msm_batt_info.batt_status == POWER_SUPPLY_STATUS_DISCHARGING) ? 
 									MAX_LOWER_CNT_DISCHG : MAX_LOWER_CNT_CHG;
 		
-		pr_info("3p5: %d %d %d %d", battery_voltage, lower_than_3p5_cnt, batt_capacity, lower_than_3p5_cnt_max);
+		//pr_info("3p5: %d %d %d %d", battery_voltage, lower_than_3p5_cnt, batt_capacity, lower_than_3p5_cnt_max);
 
 		if (battery_voltage <= 3500) {
 			
@@ -956,7 +957,7 @@ void msm_batt_update_psy_status(void)
     msm_batt_info.batt_capacity 	= batt_capacity;
     msm_batt_info.battery_voltage 	= battery_voltage;
 
-    pr_info("BATT: %d, %d, %d, %d, %d, %3d, %3d, %d, %d, %3d\n",
+    /*pr_info("BATT: %d, %d, %d, %d, %d, %3d, %3d, %d, %d, %3d\n",
      msm_batt_info.charger_status,
      msm_batt_info.charger_type,
      msm_batt_info.battery_status,
@@ -967,7 +968,7 @@ void msm_batt_update_psy_status(void)
      msm_batt_info.batt_status,
      batt_capacity_scaling_x100,
      scaling_batt_capacity
-     );
+     );*/
 	
     if (!supp)
             supp = msm_batt_info.current_ps;
@@ -979,7 +980,7 @@ void msm_batt_update_psy_status(void)
         wake_lock_timeout(&msm_battery_wakelock, HZ);
     }
 
-    pr_info("%s %lu Leave\n", __func__, enter_time);
+    //pr_info("%s %lu Leave\n", __func__, enter_time);
 }
 /* FIH-SW3-KERNEL-CHARGING-14*] */
 
@@ -1089,15 +1090,15 @@ static int msm_batt_modify_client(u32 client_handle, u32 desired_batt_voltage,
 
 void msm_batt_early_suspend(struct early_suspend *h)
 {
-	pr_debug("%s: enter\n", __func__);
-	pr_debug("%s: exit\n", __func__);
+	//pr_debug("%s: enter\n", __func__);
+	//pr_debug("%s: exit\n", __func__);
 }
 
 void msm_batt_late_resume(struct early_suspend *h)
 {
-	pr_debug("%s: enter\n", __func__);
+	//pr_debug("%s: enter\n", __func__);
 	msm_batt_update_psy_status();
-	pr_debug("%s: exit\n", __func__);
+	//pr_debug("%s: exit\n", __func__);
 }
 /* FIH-SW3-KERNEL-VH-CHARGING-09*] */
 

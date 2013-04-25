@@ -1996,17 +1996,17 @@ static void msm_otg_set_vbus_state(int online)
 	struct msm_otg *motg = the_msm_otg;
 
 	if (online) {
-		pr_debug("PMIC: BSV set\n");
+		//pr_debug("PMIC: BSV set\n");
 		set_bit(B_SESS_VLD, &motg->inputs);
 	} else {
-		pr_debug("PMIC: BSV clear\n");
+		//pr_debug("PMIC: BSV clear\n");
 		clear_bit(B_SESS_VLD, &motg->inputs);
 	}
 
 	if (!init) {
 		init = true;
 		complete(&pmic_vbus_init);
-		pr_debug("PMIC: BSV init complete\n");
+		//pr_debug("PMIC: BSV init complete\n");
 		return;
 	}
 

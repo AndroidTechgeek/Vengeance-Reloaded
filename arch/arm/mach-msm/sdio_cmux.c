@@ -11,6 +11,7 @@
  */
 
 #define DEBUG
+#undef DEBUG
 
 #include <linux/fs.h>
 #include <linux/device.h>

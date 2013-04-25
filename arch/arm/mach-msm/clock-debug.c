@@ -249,6 +249,7 @@ static const struct file_operations list_rates_fops = {
 
 int __init clock_debug_add(struct clk *clock)
 {
+#ifdef CONFIG_DEBUG_FS
 	char temp[50], *ptr;
 	struct dentry *clk_dir;
 
@@ -289,7 +290,7 @@ int __init clock_debug_add(struct clk *clock)
 		if (!debugfs_create_file("list_rates",
 				S_IRUGO, clk_dir, clock, &list_rates_fops))
 			goto error;
-
+#endif
 	return 0;
 error:
 	debugfs_remove_recursive(clk_dir);

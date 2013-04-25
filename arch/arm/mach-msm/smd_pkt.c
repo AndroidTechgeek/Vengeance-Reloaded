@@ -89,6 +89,7 @@ static int msm_smd_pkt_debug_mask;
 module_param_named(debug_mask, msm_smd_pkt_debug_mask,
 		int, S_IRUGO | S_IWUSR | S_IWGRP);
 #define DEBUG
+#undef DEBUG
 
 #ifdef DEBUG
 #define D_DUMP_BUFFER(prestr, cnt, buf) \

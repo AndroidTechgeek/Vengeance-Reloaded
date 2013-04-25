@@ -20,7 +20,7 @@ static void	led_on_off_set( struct led_data *data, struct command_parameter *par
 			mutex_lock( &data->lock );
 			gpio_direction_output( msm_data->msm_pin, parameter->para1 == LED_TURN_OFF ? msm_data->led_off_level : msm_data->led_on_level );
 			mutex_unlock( &data->lock );
-			printk( "LED : MSM GPIO-%d(%s) %s\n", msm_data->msm_pin, data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" );
+			//printk( "LED : MSM GPIO-%d(%s) %s\n", msm_data->msm_pin, data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" );
 			break;
 		}
 
@@ -35,12 +35,12 @@ static void	led_on_off_set( struct led_data *data, struct command_parameter *par
 			pmic_data->control	= parameter->para1;
 			smem_proc_oem_light_control( ( int* )pmic_data, sizeof( struct led_pmic_data ) );
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s) %s, [Pin:LPG]=[%d:%d]\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
+			//printk( "LED : PMIC %s led(%s) %s, [Pin:LPG]=[%d:%d]\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
 			break;
 		}
 
 		default :
-			printk( KERN_ERR "LED : Does not support this H/W type(%d)\n", data->use_hw );
+			//printk( KERN_ERR "LED : Does not support this H/W type(%d)\n", data->use_hw );
 			break;
 	}
 }
@@ -56,7 +56,7 @@ static void	led_blinking_set( struct led_data *data, struct command_parameter *p
 			mutex_lock( &data->lock );
 			gpio_direction_output( msm_data->msm_pin, msm_data->led_off_level );
 			mutex_unlock( &data->lock );
-			printk( "LED : MSM GPIO-%d(%s) does not support blinking\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) does not support blinking\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -71,7 +71,7 @@ static void	led_blinking_set( struct led_data *data, struct command_parameter *p
 			pmic_data->control	= parameter->para1;
 			smem_proc_oem_light_control( ( int* )pmic_data, sizeof( struct led_pmic_data ) );
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s) blink %s, [Pin:LPG]=[%d:%d]\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
+			//printk( "LED : PMIC %s led(%s) blink %s, [Pin:LPG]=[%d:%d]\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
 			break;
 		}
 
@@ -92,7 +92,7 @@ static void	led_fade_in_out_set( struct led_data *data, struct command_parameter
 			mutex_lock( &data->lock );
 			gpio_direction_output( msm_data->msm_pin, msm_data->led_off_level );
 			mutex_unlock( &data->lock );
-			printk( "LED : MSM GPIO-%d(%s) does not support fade in/out\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) does not support fade in/out\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -107,7 +107,7 @@ static void	led_fade_in_out_set( struct led_data *data, struct command_parameter
 			pmic_data->control	= parameter->para1;
 			smem_proc_oem_light_control( ( int* )pmic_data, sizeof( struct led_pmic_data ) );
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s) fade in/out %s, [Pin:LPG]=[%d:%d]\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
+			//printk( "LED : PMIC %s led(%s) fade in/out %s, [Pin:LPG]=[%d:%d]\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
 			break;
 		}
 
@@ -120,7 +120,7 @@ static void	led_fade_in_out_set( struct led_data *data, struct command_parameter
 static void	led_on_off_check_mode( struct led_data *data, struct command_parameter *parameter )
 {
 	if( data->special_mode )
-		printk( "LED : %s led, special mode\n", data->name );
+		;//printk( "LED : %s led, special mode\n", data->name );
 	else
 		led_on_off_set( data, parameter );
 }
@@ -128,7 +128,7 @@ static void	led_on_off_check_mode( struct led_data *data, struct command_paramet
 static void	led_blinking_check_mode( struct led_data *data, struct command_parameter *parameter )
 {
 	if( data->special_mode )
-		printk( "LED : %s led, special mode\n", data->name );
+		;//printk( "LED : %s led, special mode\n", data->name );
 	else
 		led_blinking_set( data, parameter );
 }
@@ -136,7 +136,7 @@ static void	led_blinking_check_mode( struct led_data *data, struct command_param
 static void	led_fade_in_out_check_mode( struct led_data *data, struct command_parameter *parameter )
 {
 	if( data->special_mode )
-		printk( "LED : %s led, special mode\n", data->name );
+		;//printk( "LED : %s led, special mode\n", data->name );
 	else
 		led_fade_in_out_set( data, parameter );
 }
@@ -152,7 +152,7 @@ static void	led_sw_blinking_set( struct led_data *data, struct command_parameter
 			mutex_lock( &data->lock );
 			gpio_direction_output( msm_data->msm_pin, msm_data->led_off_level );
 			mutex_unlock( &data->lock );
-			printk( "LED : MSM GPIO-%d(%s) does not support blinking\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) does not support blinking\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -177,7 +177,7 @@ static void	led_sw_blinking_set( struct led_data *data, struct command_parameter
 			}
 
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s) blink %s, [Pin:LPG]=[%d:%d].\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
+			//printk( "LED : PMIC %s led(%s) blink %s, [Pin:LPG]=[%d:%d].\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
 			break;
 		}
 
@@ -198,7 +198,7 @@ static void	led_sw_fade_in_out_set( struct led_data *data, struct command_parame
 			mutex_lock( &data->lock );
 			gpio_direction_output( msm_data->msm_pin, msm_data->led_off_level );
 			mutex_unlock( &data->lock );
-			printk( "LED : MSM GPIO-%d(%s) does not support fade in/out\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) does not support fade in/out\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -226,7 +226,7 @@ static void	led_sw_fade_in_out_set( struct led_data *data, struct command_parame
 			}
 
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s) fade in/out %s, [Pin:LPG]=[%d:%d].\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
+			//printk( "LED : PMIC %s led(%s) fade in/out %s, [Pin:LPG]=[%d:%d].\n", *( select_func + data->use_hw ), data->name, parameter->para1 == LED_TURN_OFF ? "off" : "on" , pmic_data->pmic_pin, pmic_data->lpg_out );
 			break;
 		}
 
@@ -239,7 +239,7 @@ static void	led_sw_fade_in_out_set( struct led_data *data, struct command_parame
 static void	led_sw_blinking_check_mode( struct led_data *data, struct command_parameter *parameter )
 {
 	if( data->special_mode )
-		printk( "LED : %s led, special mode\n", data->name );
+		;//printk( "LED : %s led, special mode\n", data->name );
 	else
 		led_sw_blinking_set( data, parameter );
 }
@@ -247,7 +247,7 @@ static void	led_sw_blinking_check_mode( struct led_data *data, struct command_pa
 static void	led_sw_fade_in_out_check_mode( struct led_data *data, struct command_parameter *parameter )
 {
 	if( data->special_mode )
-		printk( "LED : %s led, special mode\n", data->name );
+		;//printk( "LED : %s led, special mode\n", data->name );
 	else
 		led_sw_fade_in_out_set( data, parameter );
 }
@@ -260,7 +260,7 @@ static void	led_on_brightness_set( struct led_data *data, struct command_paramet
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set brightness\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set brightness\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -272,7 +272,7 @@ static void	led_on_brightness_set( struct led_data *data, struct command_paramet
 			mutex_lock( &data->lock );
 			pmic_data->on_off_pwm	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), set PWM(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->on_off_pwm );
+			//printk( "LED : PMIC %s led(%s), set PWM(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->on_off_pwm );
 			break;
 		}
 
@@ -290,7 +290,7 @@ static void	led_blinking_brightness_set( struct led_data *data, struct command_p
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set brightness\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set brightness\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -303,7 +303,7 @@ static void	led_blinking_brightness_set( struct led_data *data, struct command_p
 			pmic_data->blinking_pwm1	= parameter->para1;
 			pmic_data->blinking_pwm2	= parameter->para2;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), set blinking PWM[%d:%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->blinking_pwm1, pmic_data->blinking_pwm2 );
+			//printk( "LED : PMIC %s led(%s), set blinking PWM[%d:%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->blinking_pwm1, pmic_data->blinking_pwm2 );
 			break;
 		}
 
@@ -321,7 +321,7 @@ static void	led_fade_in_out_interval_set( struct led_data *data, struct command_
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set interval\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set interval\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -333,7 +333,7 @@ static void	led_fade_in_out_interval_set( struct led_data *data, struct command_
 			mutex_lock( &data->lock );
 			pmic_data->interval	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), set intervale(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->interval );
+			//printk( "LED : PMIC %s led(%s), set intervale(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->interval );
 			break;
 		}
 
@@ -351,7 +351,7 @@ static void	led_blinking_time_set( struct led_data *data, struct command_paramet
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set blinking time\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set blinking time\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -364,7 +364,7 @@ static void	led_blinking_time_set( struct led_data *data, struct command_paramet
 			pmic_data->blinking_time1	= parameter->para1;
 			pmic_data->blinking_time2	= parameter->para2;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), set blinking time[%d:%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->blinking_time1, pmic_data->blinking_time2 );
+			//printk( "LED : PMIC %s led(%s), set blinking time[%d:%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->blinking_time1, pmic_data->blinking_time2 );
 			break;
 		}
 
@@ -386,14 +386,14 @@ static void	led_mode_set( struct led_data *data, struct command_parameter *param
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s), %s mode\n", msm_data->msm_pin, data->name, data->special_mode ? "Special" : "Normal" );
+			//printk( "LED : MSM GPIO-%d(%s), %s mode\n", msm_data->msm_pin, data->name, data->special_mode ? "Special" : "Normal" );
 			break;
 		}
 
 		case	LED_HW_PMIC_GPIO :
 		case	LED_HW_PMIC_MPP :
 		{
-			printk( "LED : PMIC %s led(%s), %s mode\n", *( select_func + data->use_hw ), data->name, data->special_mode ? "Special" : "Normal" );
+			//printk( "LED : PMIC %s led(%s), %s mode\n", *( select_func + data->use_hw ), data->name, data->special_mode ? "Special" : "Normal" );
 			break;
 		}
 
@@ -411,7 +411,7 @@ static void	led_set_clk_div_exp( struct led_data *data, struct command_parameter
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set clk, div & exp\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set clk, div & exp\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -425,7 +425,7 @@ static void	led_set_clk_div_exp( struct led_data *data, struct command_parameter
 			pmic_data->pwm_div_value	= parameter->para2;
 			pmic_data->pwm_div_exp	= parameter->para3;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), [CLK:DIV:EXP] = [%d:%d:%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->pwm_clock, pmic_data->pwm_div_value, pmic_data->pwm_div_exp );
+			//printk( "LED : PMIC %s led(%s), [CLK:DIV:EXP] = [%d:%d:%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->pwm_clock, pmic_data->pwm_div_value, pmic_data->pwm_div_exp );
 			break;
 		}
 
@@ -443,7 +443,7 @@ static void	led_set_clk( struct led_data *data, struct command_parameter *parame
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set clk\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set clk\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -455,7 +455,7 @@ static void	led_set_clk( struct led_data *data, struct command_parameter *parame
 			mutex_lock( &data->lock );
 			pmic_data->pwm_clock	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), CLK(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->pwm_clock );
+			//printk( "LED : PMIC %s led(%s), CLK(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->pwm_clock );
 			break;
 		}
 
@@ -473,7 +473,7 @@ static void	led_set_div( struct led_data *data, struct command_parameter *parame
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set div\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set div\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -485,7 +485,7 @@ static void	led_set_div( struct led_data *data, struct command_parameter *parame
 			mutex_lock( &data->lock );
 			pmic_data->pwm_div_value	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), DIV(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->pwm_div_value );
+			//printk( "LED : PMIC %s led(%s), DIV(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->pwm_div_value );
 			break;
 		}
 
@@ -503,7 +503,7 @@ static void	led_set_exp( struct led_data *data, struct command_parameter *parame
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set exp\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set exp\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -515,7 +515,7 @@ static void	led_set_exp( struct led_data *data, struct command_parameter *parame
 			mutex_lock( &data->lock );
 			pmic_data->pwm_div_exp	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), EXP(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->pwm_div_exp );
+			//printk( "LED : PMIC %s led(%s), EXP(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->pwm_div_exp );
 			break;
 		}
 
@@ -533,7 +533,7 @@ static void	led_set_toggle_loop_ramp( struct led_data *data, struct command_para
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set toggle, loop & ramp\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set toggle, loop & ramp\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -547,7 +547,7 @@ static void	led_set_toggle_loop_ramp( struct led_data *data, struct command_para
 			pmic_data->ramp_loop	= parameter->para2;
 			pmic_data->ramp_up_down	= parameter->para3;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), [Toggle:Loop:Ramp]=[%s:%s:%s]\n", *( select_func + data->use_hw ), data->name, pmic_data->toggle_up_down ? "Yes" : "No", pmic_data->ramp_loop ? "Yes" : "No", pmic_data->ramp_up_down ? "Yes" : "No" );
+			//printk( "LED : PMIC %s led(%s), [Toggle:Loop:Ramp]=[%s:%s:%s]\n", *( select_func + data->use_hw ), data->name, pmic_data->toggle_up_down ? "Yes" : "No", pmic_data->ramp_loop ? "Yes" : "No", pmic_data->ramp_up_down ? "Yes" : "No" );
 			break;
 		}
 
@@ -565,7 +565,7 @@ static void	led_set_toggle( struct led_data *data, struct command_parameter *par
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set toggle\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set toggle\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -577,7 +577,7 @@ static void	led_set_toggle( struct led_data *data, struct command_parameter *par
 			mutex_lock( &data->lock );
 			pmic_data->toggle_up_down	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), Toggle(%s)\n", *( select_func + data->use_hw ), data->name, pmic_data->toggle_up_down ? "Yes" : "No" );
+			//printk( "LED : PMIC %s led(%s), Toggle(%s)\n", *( select_func + data->use_hw ), data->name, pmic_data->toggle_up_down ? "Yes" : "No" );
 			break;
 		}
 
@@ -595,7 +595,7 @@ static void	led_set_loop( struct led_data *data, struct command_parameter *param
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set loop\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set loop\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -607,7 +607,7 @@ static void	led_set_loop( struct led_data *data, struct command_parameter *param
 			mutex_lock( &data->lock );
 			pmic_data->ramp_loop	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), Loop(%s)\n", *( select_func + data->use_hw ), data->name, pmic_data->ramp_loop ? "Yes" : "No" );
+			//printk( "LED : PMIC %s led(%s), Loop(%s)\n", *( select_func + data->use_hw ), data->name, pmic_data->ramp_loop ? "Yes" : "No" );
 			break;
 		}
 
@@ -625,7 +625,7 @@ static void	led_set_ramp( struct led_data *data, struct command_parameter *param
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set ramp\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set ramp\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -637,7 +637,7 @@ static void	led_set_ramp( struct led_data *data, struct command_parameter *param
 			mutex_lock( &data->lock );
 			pmic_data->ramp_up_down	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), Ramp(%s)\n", *( select_func + data->use_hw ), data->name, pmic_data->ramp_up_down ? "Yes" : "No" );
+			//printk( "LED : PMIC %s led(%s), Ramp(%s)\n", *( select_func + data->use_hw ), data->name, pmic_data->ramp_up_down ? "Yes" : "No" );
 			break;
 		}
 
@@ -655,7 +655,7 @@ static void	led_fade_in_out_brightness_set( struct led_data *data, struct comman
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set fade in/out brightness\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set fade in/out brightness\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -667,7 +667,7 @@ static void	led_fade_in_out_brightness_set( struct led_data *data, struct comman
 			mutex_lock( &data->lock );
 			pmic_data->fade_in_out_pwm	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), set fade in/out PWM[%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->fade_in_out_pwm );
+			//printk( "LED : PMIC %s led(%s), set fade in/out PWM[%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->fade_in_out_pwm );
 			break;
 		}
 
@@ -685,7 +685,7 @@ static void	led_set_invert( struct led_data *data, struct command_parameter *par
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set invert\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set invert\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -696,13 +696,13 @@ static void	led_set_invert( struct led_data *data, struct command_parameter *par
 			mutex_lock( &data->lock );
 			pmic_data->invert	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), %s invert\n", *( select_func + data->use_hw ), data->name, pmic_data->invert ? "Enable" : "Disable" );
+			//printk( "LED : PMIC %s led(%s), %s invert\n", *( select_func + data->use_hw ), data->name, pmic_data->invert ? "Enable" : "Disable" );
 			break;
 		}
 
 		case	LED_HW_PMIC_MPP :
 		{
-			printk( "LED : PMIC %s led(%s) can't set invert\n", *( select_func + data->use_hw ), data->name );
+			//printk( "LED : PMIC %s led(%s) can't set invert\n", *( select_func + data->use_hw ), data->name );
 			break;
 		}
 
@@ -720,13 +720,13 @@ static void	led_set_current_sink( struct led_data *data, struct command_paramete
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set current sink\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set current sink\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
 		case	LED_HW_PMIC_GPIO :
 		{
-			printk( "LED : PMIC %s led(%s) can't set current sink\n", *( select_func + data->use_hw ), data->name );
+			//printk( "LED : PMIC %s led(%s) can't set current sink\n", *( select_func + data->use_hw ), data->name );
 			break;
 		}
 
@@ -736,14 +736,14 @@ static void	led_set_current_sink( struct led_data *data, struct command_paramete
 
 			if( parameter->para1 >= sizeof( current_sink_table ) / sizeof( *current_sink_table ) )
 			{
-				printk( "LED : PMIC %s led(%s) can't suppurt this value(%d)\n", *( select_func + data->use_hw ), data->name, parameter->para1 );
+				//printk( "LED : PMIC %s led(%s) can't suppurt this value(%d)\n", *( select_func + data->use_hw ), data->name, parameter->para1 );
 				break;
 			}
 
 			mutex_lock( &data->lock );
 			pmic_data->current_sink	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), current sink(%s)\n", *( select_func + data->use_hw ), data->name, *( current_sink_table + pmic_data->current_sink ) );
+			//printk( "LED : PMIC %s led(%s), current sink(%s)\n", *( select_func + data->use_hw ), data->name, *( current_sink_table + pmic_data->current_sink ) );
 			break;
 		}
 
@@ -764,7 +764,7 @@ static void	led_set_pin( struct led_data *data, struct command_parameter *parame
 			mutex_lock( &data->lock );
 			msm_data->msm_pin	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : MSM GPIO-%d(%s), set pin(%d)\n", msm_data->msm_pin, data->name, msm_data->msm_pin );
+			//printk( "LED : MSM GPIO-%d(%s), set pin(%d)\n", msm_data->msm_pin, data->name, msm_data->msm_pin );
 			break;
 		}
 
@@ -776,7 +776,7 @@ static void	led_set_pin( struct led_data *data, struct command_parameter *parame
 			mutex_lock( &data->lock );
 			pmic_data->pmic_pin	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), set pin(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->pmic_pin );
+			//printk( "LED : PMIC %s led(%s), set pin(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->pmic_pin );
 			break;
 		}
 
@@ -798,14 +798,14 @@ static void	led_set_on_off_level( struct led_data *data, struct command_paramete
 			msm_data->led_on_level	= parameter->para1;
 			msm_data->led_off_level	= parameter->para2;
 			mutex_unlock( &data->lock );
-			printk( "LED : MSM GPIO-%d(%s), level[on:off]=[%s:%s]\n", msm_data->msm_pin, data->name, msm_data->led_on_level ? "High" : "Low", msm_data->led_off_level ? "High" : "Low" );
+			//printk( "LED : MSM GPIO-%d(%s), level[on:off]=[%s:%s]\n", msm_data->msm_pin, data->name, msm_data->led_on_level ? "High" : "Low", msm_data->led_off_level ? "High" : "Low" );
 			break;
 		}
 
 		case	LED_HW_PMIC_GPIO :
 		case	LED_HW_PMIC_MPP :
 		{
-			printk( "LED : PMIC %s led(%s) can't set on/off level\n", *( select_func + data->use_hw ), data->name );
+			//printk( "LED : PMIC %s led(%s) can't set on/off level\n", *( select_func + data->use_hw ), data->name );
 			break;
 		}
 
@@ -823,7 +823,7 @@ static void	led_set_lpg_out( struct led_data *data, struct command_parameter *pa
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set LPG out\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set LPG out\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -835,7 +835,7 @@ static void	led_set_lpg_out( struct led_data *data, struct command_parameter *pa
 			mutex_lock( &data->lock );
 			pmic_data->lpg_out	= parameter->para1;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), LPG(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->lpg_out );
+			//printk( "LED : PMIC %s led(%s), LPG(%d)\n", *( select_func + data->use_hw ), data->name, pmic_data->lpg_out );
 			break;
 		}
 
@@ -853,7 +853,7 @@ static void	led_set_lut_table_range( struct led_data *data, struct command_param
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s) can't set range of LUT table\n", msm_data->msm_pin, data->name );
+			//printk( "LED : MSM GPIO-%d(%s) can't set range of LUT table\n", msm_data->msm_pin, data->name );
 			break;
 		}
 
@@ -866,7 +866,7 @@ static void	led_set_lut_table_range( struct led_data *data, struct command_param
 			pmic_data->lut_table_start	= parameter->para1;
 			pmic_data->lut_table_end	= parameter->para2;
 			mutex_unlock( &data->lock );
-			printk( "LED : PMIC %s led(%s), LUT table[%d-%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->lut_table_start, pmic_data->lut_table_end );
+			//printk( "LED : PMIC %s led(%s), LUT table[%d-%d]\n", *( select_func + data->use_hw ), data->name, pmic_data->lut_table_start, pmic_data->lut_table_end );
 			break;
 		}
 
@@ -888,14 +888,14 @@ static void	led_set_on_off_state( struct led_data *data, struct command_paramete
 		{
 			struct led_gpio_data	*msm_data	= &data->detail.gpio_data;
 
-			printk( "LED : MSM GPIO-%d(%s), the state is %s\n", msm_data->msm_pin, data->name, data->on_off_state ? "On" : "Off" );
+			//printk( "LED : MSM GPIO-%d(%s), the state is %s\n", msm_data->msm_pin, data->name, data->on_off_state ? "On" : "Off" );
 			break;
 		}
 
 		case	LED_HW_PMIC_GPIO :
 		case	LED_HW_PMIC_MPP :
 		{
-			printk( "LED : PMIC %s led(%s), the state is %s\n", *( select_func + data->use_hw ), data->name, data->on_off_state ? "On" : "Off" );
+			//printk( "LED : PMIC %s led(%s), the state is %s\n", *( select_func + data->use_hw ), data->name, data->on_off_state ? "On" : "Off" );
 			break;
 		}
 
@@ -1162,7 +1162,7 @@ static ssize_t led_control( void *node_data, struct device_attribute *attr, cons
 		}
 
 		pointer += char_count;
-		printk( "LED : [CMD:ID:Para]=[%d:%d:%d]\n", user_command, led_id, command->parameter );
+		//printk( "LED : [CMD:ID:Para]=[%d:%d:%d]\n", user_command, led_id, command->parameter );
 
 		{
 			struct command_parameter	parameter;
@@ -1309,7 +1309,7 @@ static void	led_early_suspend_function(struct early_suspend *handler)
 	unsigned int		loop;
 
 	wake_lock_timeout( timeout_wakelock, WAIT_LOCK_TIME * HZ / 1000 );
-	printk( "LED : Wake lock(%dms)\n", WAIT_LOCK_TIME );
+	//printk( "LED : Wake lock(%dms)\n", WAIT_LOCK_TIME );
 	parameter.para1	= LED_TURN_OFF;
 
 	for( loop = 0 ; loop < count ; ++loop )

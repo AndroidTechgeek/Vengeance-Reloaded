@@ -425,7 +425,7 @@ void chg_ipc_print_msg(void)
             i++;
             if (i > CHG_LOG_BUFFER_RECORDS)
                 i = 1;
-            dev_info(bq27520_di->dev, "MC%2d.%s\n", i, &bq27520_di->pChgIpcInfo->msg[i-1][0]);
+            //dev_info(bq27520_di->dev, "MC%2d.%s\n", i, &bq27520_di->pChgIpcInfo->msg[i-1][0]);
         }
     } else {
          dev_info(bq27520_di->dev, "bq27520_di->pChgIpcInfo = NULL\r\n");
@@ -773,9 +773,9 @@ static void update_current_battery_status(int data)
 		/* FIH-SW3-KERNEL-EL-fix_temp_read_from_PMIC-00*] */
         bq27520_di->pChgIpcInfo->parameters[CHG_IPC_PARAMETER_GAUGE_I] = status[GET_BATTERY_CURRENT];
 		
-        dev_info(bq27520_di->dev, "CP, V, T, I=[%3d, %4d, %3d, %4d, 0x%x, %3d, %d]\r\n", status[GET_BATTERY_CAPACITY],
+        /*dev_info(bq27520_di->dev, "CP, V, T, I=[%3d, %4d, %3d, %4d, 0x%x, %3d, %d]\r\n", status[GET_BATTERY_CAPACITY],
 		status[GET_BATTERY_VOLTAGE], status[GET_BATTERY_TEMPERATURE], status[GET_BATTERY_CURRENT],
-		status[GET_BATTERY_FLAGS], status[GET_BATTERY_SOH], status[GET_BATTERY_SOH_STATUS]);
+		status[GET_BATTERY_FLAGS], status[GET_BATTERY_SOH], status[GET_BATTERY_SOH_STATUS]);*/
 		
 	/* Show extra debug message. */
 	if (msm_batt_debug_mask & BQ275X0_EXTRA_DEBUG_LOG)
@@ -830,7 +830,7 @@ static void update_current_battery_status(int data)
         dev_err(bq27520_di->dev, "CP = %d, wake-up timer = 1800\n", current_battery_status.status[GET_BATTERY_CAPACITY]);
         msmrtc_set_wakeup_cycle_time(1800);
     } else {
-        dev_err(bq27520_di->dev, "CP = %d, disable wake-up timer\n", current_battery_status.status[GET_BATTERY_CAPACITY]);
+        //dev_err(bq27520_di->dev, "CP = %d, disable wake-up timer\n", current_battery_status.status[GET_BATTERY_CAPACITY]);
         msmrtc_set_wakeup_cycle_time(0);
     }
 

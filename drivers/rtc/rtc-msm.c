@@ -450,11 +450,6 @@ static void process_cb_request(void *buffer)
 			be64_to_cpu(rtc_cb->cb_info_data.tod_update.stamp);
 		rtc_cb->cb_info_data.tod_update.freq =
 			be32_to_cpu(rtc_cb->cb_info_data.tod_update.freq);
-		pr_info("RPC CALL -- TOD TIME UPDATE: ttick = %d\n"
-			"stamp=%lld, freq = %d\n",
-			rtc_cb->cb_info_data.tod_update.tick,
-			rtc_cb->cb_info_data.tod_update.stamp,
-			rtc_cb->cb_info_data.tod_update.freq);
 
 		getnstimeofday(&ts);
 		msmrtc_updateatsuspend(&ts);
@@ -702,7 +697,7 @@ msmrtc_alarmtimer_expired(unsigned long _data,
 static int RPC_wakeup_cycle_time = 0;
 void msmrtc_set_wakeup_cycle_time(int cycle_time)
 {
-    pr_info("%s, cycle time = %d\n", __func__, cycle_time);    
+    //pr_info("%s, cycle time = %d\n", __func__, cycle_time);    
     RPC_wakeup_cycle_time = cycle_time;
 }
 EXPORT_SYMBOL(msmrtc_set_wakeup_cycle_time);

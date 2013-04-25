@@ -157,7 +157,7 @@ dhd_customer_gpio_wlan_ctrl(int onoff)
 #ifdef CUSTOMER_HW2
 			wifi_set_power(0, 0);
 #endif
-			WL_ERROR(("=========== WLAN placed in RESET ========\n"));
+			//WL_ERROR(("=========== WLAN placed in RESET ========\n"));
 		break;
 
 		case WLAN_RESET_ON:
@@ -172,7 +172,7 @@ dhd_customer_gpio_wlan_ctrl(int onoff)
 #ifdef CUSTOMER_HW2
 			wifi_set_power(1, 0);
 #endif
-			WL_ERROR(("=========== WLAN going back to live  ========\n"));
+			//WL_ERROR(("=========== WLAN going back to live  ========\n"));
 		break;
 
 		case WLAN_POWER_OFF:

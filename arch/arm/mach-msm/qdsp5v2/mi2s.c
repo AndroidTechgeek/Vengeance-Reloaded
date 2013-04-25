@@ -21,6 +21,7 @@
 #include <mach/qdsp5v2/audio_dev_ctl.h>
 
 #define DEBUG
+#undef DEBUG
 #ifdef DEBUG
 #define dprintk(format, arg...) \
 printk(KERN_DEBUG format, ## arg)

@@ -1124,7 +1124,6 @@ static void do_read_data(struct work_struct *work)
 				       hdr.dst_cid,
 				       hdr.src_cid);
 	}
-#endif
 
 	/* FIH-SW3-KERNEL-TH-porting_dbgcfgtool-00+[ */
 	if (debug_rpcmsg_enable)
@@ -1139,6 +1138,7 @@ static void do_read_data(struct work_struct *work)
 		}
 	}
 	/* FIH-SW3-KERNEL-TH-porting_dbgcfgtool-00+] */
+#endif
 	
 	spin_lock_irqsave(&local_endpoints_lock, flags);
 	ept = rpcrouter_lookup_local_endpoint(hdr.dst_cid);

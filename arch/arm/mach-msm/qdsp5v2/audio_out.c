@@ -119,6 +119,8 @@ static void audio_out_listener(u32 evt_id, union auddev_evt_data *evt_payload,
 			audpp_route_stream(audio->dec_id, audio->source);
 		break;
 	case AUDDEV_EVT_STREAM_VOL_CHG:
+		
+		printk("set session vol: %lu", evt_payload->session_vol);
 		audio->vol_pan.volume = evt_payload->session_vol;
 		MM_DBG(":AUDDEV_EVT_STREAM_VOL_CHG, stream vol %d\n",
 				audio->vol_pan.volume);
@@ -365,6 +367,7 @@ static long audio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 
 	switch (cmd) {
 	case AUDIO_SET_VOLUME:
+		printk("set vol: %lu", arg);
 		spin_lock_irqsave(&audio->dsp_lock, flags);
 		audio->vol_pan.volume = arg;
 		if (audio->running)
@@ -374,6 +377,7 @@ static long audio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		return 0;
 
 	case AUDIO_SET_PAN:
+		printk("set pan: %lu", arg);
 		spin_lock_irqsave(&audio->dsp_lock, flags);
 		audio->vol_pan.pan = arg;
 		if (audio->running)

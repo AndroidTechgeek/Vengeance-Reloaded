@@ -11,6 +11,7 @@
  */
 
 #define DEBUG
+#undef DEBUG
 
 #include <linux/slab.h>
 #include <linux/module.h>

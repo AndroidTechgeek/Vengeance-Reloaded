@@ -19,7 +19,7 @@ static enum hrtimer_restart vibrator_timeout( struct hrtimer *timer )
 
 	atomic_set( &classdev->turn_off, TURN_ON );
 	queue_work( vib_class.work_queue, &classdev->work_off );
-	printk( "VIB : Vibrator(%s) timeout, turn off vibrator\n", classdev->name );
+	//printk( "VIB : Vibrator(%s) timeout, turn off vibrator\n", classdev->name );
 	return	HRTIMER_NORESTART;
 }
 
@@ -65,12 +65,12 @@ static ssize_t vibrator_control( struct device *dev, struct device_attribute *at
 	switch( vibrate_time )
 	{
 		case	VIBRATE_OFF :
-			printk( "VIB : Turn off vibrator(%s)\n", classdev->name );
+			//printk( "VIB : Turn off vibrator(%s)\n", classdev->name );
 			queue_work( vib_class.work_queue, &classdev->work_off );
 			break;
 
 		case	VIBRATE_ALWAYS :
-			printk( "VIB : Always turn on vibrator(%s)\n", classdev->name );
+			//printk( "VIB : Always turn on vibrator(%s)\n", classdev->name );
 			classdev->turn_off_time	= 0;
 			queue_work( vib_class.work_queue, &classdev->work_on );
 			break;
@@ -78,7 +78,16 @@ static ssize_t vibrator_control( struct device *dev, struct device_attribute *at
 		case	VIBRATE_60_SEC :
 		default :
 			classdev->turn_off_time	= vibrate_time >= VIBRATE_60_SEC ? VIBRATE_60_SEC : vibrate_time;
-			printk( "VIB : Turn off vibrator(%s) after %dms\n", classdev->name, classdev->turn_off_time );
+			//printk( "VIB : Turn off vibrator(%s) after %dms\n", classdev->name, classdev->turn_off_time );
+
+			//gentle hack: skip 2nd in double event 10/30
+			if ( classdev->turn_off_time == 30 )
+				return size;
+				
+			//gentle hack: map 10 to 20 ms
+			if ( classdev->turn_off_time < 100 )
+				 classdev->turn_off_time = 15;
+			//printk( "VIB : Turn off vibrator(%s) after %dms\n", classdev->name, classdev->turn_off_time );
 			queue_work( vib_class.work_queue, &classdev->work_on );
 			break;
 	}

@@ -325,7 +325,7 @@ static void report_hs_key(uint32_t key_code, uint32_t key_parm)
 
 	if( ( raw & STATE_FLAG_MASK ) == KEY_STATE_FLAG )
 	{
-		printk( "PKEY : AMSS state(%x), [IP:IR:DE:RP:RR]=[%d:%d:%d:%d:%d]\n", raw, raw & ISR_PRESS ? 1 : 0, raw & ISR_RELEASE ? 1 : 0, raw & ISR_DEBOUNCE ? 1 : 0, raw & RPC_PRESS ? 1 : 0, raw & RPC_RELEASE ? 1 : 0 );
+		//printk( "PKEY : AMSS state(%x), [IP:IR:DE:RP:RR]=[%d:%d:%d:%d:%d]\n", raw, raw & ISR_PRESS ? 1 : 0, raw & ISR_RELEASE ? 1 : 0, raw & ISR_DEBOUNCE ? 1 : 0, raw & RPC_PRESS ? 1 : 0, raw & RPC_RELEASE ? 1 : 0 );
 		return;
 	}
 
@@ -741,7 +741,7 @@ void	check_power_key_skip_count( void )
 
 	int	skip_count	= atomic_read( &power_key_skip_count );
 
-	printk( "PKEY : Check power key, Skip count(%d)\n", skip_count );
+	//printk( "PKEY : Check power key, Skip count(%d)\n", skip_count );
 
 	if( skip_count % 2 )
 	{

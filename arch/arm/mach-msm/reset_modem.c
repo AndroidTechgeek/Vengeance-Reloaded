@@ -22,7 +22,7 @@
 #include "proc_comm.h"
 
 #define DEBUG
-/* #undef DEBUG */
+#undef DEBUG 
 #ifdef DEBUG
 #define D(x...) printk(x)
 #else

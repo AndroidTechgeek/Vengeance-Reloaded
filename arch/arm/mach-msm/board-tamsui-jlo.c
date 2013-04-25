@@ -582,7 +582,7 @@ static int bluetooth_power(int on)
 {
     int rc;
 
-    printk("KERN_DEBUG %s: POWER %s\n", __FUNCTION__, on?"ON":"OFF");
+    //printk("KERN_DEBUG %s: POWER %s\n", __FUNCTION__, on?"ON":"OFF");
 
     if (on)
     {
@@ -605,9 +605,9 @@ static int bluetooth_power(int on)
         gpio_set_value(GPIO_BT_REG_ON, 1);
         mdelay(100);       
 
-        printk(KERN_DEBUG "%s: GPIO_BT_RST (%s)\n", __FUNCTION__, gpio_get_value(GPIO_BT_RST_N)?"HIGH":"LOW");
-        printk(KERN_DEBUG "%s: GPIO_BT_REG_ON (%s)\n", __FUNCTION__, gpio_get_value(GPIO_BT_REG_ON)?"HIGH":"LOW");
-        printk(KERN_DEBUG "%s: BT_HOST_WAKE !(%s)\n", __FUNCTION__, gpio_get_value(BT_HOST_WAKE)?"HIGH":"LOW");
+        //printk(KERN_DEBUG "%s: GPIO_BT_RST (%s)\n", __FUNCTION__, gpio_get_value(GPIO_BT_RST_N)?"HIGH":"LOW");
+        //printk(KERN_DEBUG "%s: GPIO_BT_REG_ON (%s)\n", __FUNCTION__, gpio_get_value(GPIO_BT_REG_ON)?"HIGH":"LOW");
+        //printk(KERN_DEBUG "%s: BT_HOST_WAKE !(%s)\n", __FUNCTION__, gpio_get_value(BT_HOST_WAKE)?"HIGH":"LOW");
     }
     else
     {
@@ -626,9 +626,9 @@ static int bluetooth_power(int on)
         gpio_set_value(GPIO_BT_REG_ON, 0);
         mdelay(100);
 
-        printk(KERN_DEBUG "%s: GPIO_BT_RST (%s)\n", __FUNCTION__, gpio_get_value(GPIO_BT_RST_N)?"HIGH":"LOW");
-        printk(KERN_DEBUG "%s: GPIO_BT_REG_ON (%s)\n", __FUNCTION__, gpio_get_value(GPIO_BT_REG_ON)?"HIGH":"LOW");
-        printk(KERN_DEBUG "%s: BT_HOST_WAKE !(%s)\n", __FUNCTION__, gpio_get_value(BT_HOST_WAKE)?"HIGH":"LOW");
+        //printk(KERN_DEBUG "%s: GPIO_BT_RST (%s)\n", __FUNCTION__, gpio_get_value(GPIO_BT_RST_N)?"HIGH":"LOW");
+        //printk(KERN_DEBUG "%s: GPIO_BT_REG_ON (%s)\n", __FUNCTION__, gpio_get_value(GPIO_BT_REG_ON)?"HIGH":"LOW");
+        //printk(KERN_DEBUG "%s: BT_HOST_WAKE !(%s)\n", __FUNCTION__, gpio_get_value(BT_HOST_WAKE)?"HIGH":"LOW");
     }
 
     return 0;

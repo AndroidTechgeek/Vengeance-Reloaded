@@ -146,15 +146,11 @@ void msm_clock_init(struct clock_init_data *data);
 int vote_vdd_level(struct clk_vdd_class *vdd_class, int level);
 int unvote_vdd_level(struct clk_vdd_class *vdd_class, int level);
 
-#ifdef CONFIG_DEBUG_FS
+//#ifdef CONFIG_DEBUG_FS
 int clock_debug_init(struct clock_init_data *data);
 int clock_debug_add(struct clk *clock);
 void clock_debug_print_enabled(void);
-#else
-static inline int clock_debug_init(struct clk_init_data *data) { return 0; }
-static inline int clock_debug_add(struct clk *clock) { return 0; }
-static inline void clock_debug_print_enabled(void) { return; }
-#endif
+//#endif
 
 extern struct clk dummy_clk;
 

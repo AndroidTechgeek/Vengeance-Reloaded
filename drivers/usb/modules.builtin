@@ -1,0 +1,3 @@
+kernel/drivers/usb/class/cdc-acm.ko
+kernel/drivers/usb/core/usbcore.ko
+kernel/drivers/usb/gadget/msm72k_udc.ko

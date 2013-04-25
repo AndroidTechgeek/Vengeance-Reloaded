@@ -169,7 +169,6 @@ struct msm_hs_port {
 #define RETRY_TIMEOUT 5
 #define UARTDM_NR 2
 
-static struct dentry *debug_base;
 static struct msm_hs_port q_uart_port[UARTDM_NR];
 static struct platform_driver msm_serial_hs_platform_driver;
 static struct uart_driver msm_hs_driver;
@@ -1945,8 +1944,6 @@ static int __init msm_hs_probe(struct platform_device *pdev)
 	ret = sysfs_create_file(&pdev->dev.kobj, &dev_attr_clock.attr);
 	if (unlikely(ret))
 		return ret;
-
-	msm_serial_debugfs_init(msm_uport, pdev->id);
 
 	uport->line = pdev->id;
 	return uart_add_one_port(&msm_hs_driver, uport);

@@ -46,6 +46,8 @@
 #include <mach/vreg.h>
 #include <linux/fih_hw_info.h> /*FIH-MTD-PERIPHERAL-CH-MES-02++[*/
 
+#undef DEBUG
+
 /* rely on kernel input.h to define Multi-Touch capability */
 #ifndef ABS_MT_TRACKING_ID
 /* define only if not defined already by system; */
@@ -422,16 +424,14 @@ int prv_area[CY_NUM_MT_TCH_ID];
 /* FIH-SW3-PERIPHERAL-AH-Touchkey_Porting-00+} */
 
 #define LOCK(m) do { \
-	printk(KERN_INFO "%s: lock\n", __func__); \
 	mutex_lock(&(m)); \
 } while (0);
 
 #define UNLOCK(m) do { \
-	printk(KERN_INFO "%s: unlock\n", __func__); \
 	mutex_unlock(&(m)); \
 } while (0);
 
-#if DEBUG
+#ifdef DEBUG
 static void print_data_block(const char *func, u8 command,
 			u8 length, void *data)
 {
@@ -472,8 +472,6 @@ static int ttsp_read_block_data(struct cyttsp *ts, u8 command,
 	int rc=-1;/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-02++*/
 	int tries=0;/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-02++*/
 
-	DBG_MSG("%s: Enter\n", __func__);
-
 	if (!buf || !length) {
 		DBG_ERR("%s: Error, buf:%s len:%u\n",
 				__func__, !buf ? "NULL" : "OK", length);
@@ -489,7 +487,7 @@ static int ttsp_read_block_data(struct cyttsp *ts, u8 command,
 	if (rc < 0)
 		DBG_ERR("%s: error %d\n", __func__, rc);
 
-#if DEBUG
+#ifdef DEBUG
 	print_data_block(__func__, command, length, buf);
 #else
 	//do nothing
@@ -503,7 +501,6 @@ static int ttsp_write_block_data(struct cyttsp *ts, u8 command,
 {
 	int rc=-1;/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-02++*/
 	int tries=0;/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-02++*/
-	DBG_MSG("%s: Enter\n", __func__);
 
 	if (!buf || !length) {
 		printk(KERN_ERR "%s: Error, buf:%s len:%u\n",
@@ -520,7 +517,7 @@ static int ttsp_write_block_data(struct cyttsp *ts, u8 command,
 	if (rc < 0)
 		DBG_ERR("%s: error %d\n", __func__, rc);
 	
-#if DEBUG
+#ifdef DEBUG
 	print_data_block(__func__, command, length, buf);
 #else
 	//do nothing
@@ -535,7 +532,6 @@ static void cyttsp_timer(unsigned long handle)
 {
 	struct cyttsp *ts = (struct cyttsp *)handle;
 
-	DBG_MSG("%s: TTSP timer event!\n", __func__);
 	/* schedule motion signal handling */
 	if (!work_pending(&ts->work))
 		schedule_work(&ts->work);
@@ -552,7 +548,6 @@ static irqreturn_t cyttsp_irq(int irq, void *handle)
 {
 	struct cyttsp *ts = (struct cyttsp *)handle;
 
-	DBG_MSG("%s: Got IRQ = %d!\n", __func__, irq);
 /* FIH-SW1-PERIPHERAL-OH-TAP_TOUCH_TestMode-00+{ */	
 #ifdef TEST_MODE
 	if (!work_pending(&ts->work) && (ts->current_test_mode == EXIT_TEST_MODE))
@@ -617,11 +612,11 @@ static void handle_multi_touch(struct cyttsp_track_data *t, struct cyttsp *ts)
 			if (mt_sync_func)
 				mt_sync_func(ts->input);
 			
-			DBG_INFO("%s: T_ID:%3d Z:%3d   X:%3d Y:%3d\n", __func__,
+			/*DBG_INFO("%s: T_ID:%3d Z:%3d   X:%3d Y:%3d\n", __func__,
 			id,
 			CY_NTCH,
 			ts->prv_mt_pos[ts->pre_id[id]][CY_XPOS],
-			ts->prv_mt_pos[ts->pre_id[id]][CY_YPOS]);
+			ts->prv_mt_pos[ts->pre_id[id]][CY_YPOS]);*/
 		
 			ts->act_trk[id] = CY_NTCH;
 			ts->prv_mt_pos[ts->pre_id[id]][CY_XPOS] = 0;
@@ -657,11 +652,11 @@ static void handle_multi_touch(struct cyttsp_track_data *t, struct cyttsp *ts)
 		/*FIH-MTD-PERIPHERAL-CH-TRACKING_ID-00++[*/
 		if(ts->act_trk[t->cur_mt_tch[id]]==CY_NTCH)
 		{
-			DBG_INFO("%s: ID:%3d Z:%3d  X:%3d Y:%3d\n", __func__,
+			;/*DBG_INFO("%s: ID:%3d Z:%3d  X:%3d Y:%3d\n", __func__,
 				t->cur_mt_tch[id],
 				t->cur_mt_z[id],
 				t->cur_mt_pos[id][CY_XPOS],
-				t->cur_mt_pos[id][CY_YPOS]);
+				t->cur_mt_pos[id][CY_YPOS]);*/
 		}
 		else
 		{
@@ -708,7 +703,6 @@ static void testmode_work_func(struct work_struct *work)
 	u8 cmd;
 	
 	LOCK(ts->test_mode_mutex);
-	DBG_INFO("Enter Test Mode Work Queue\n");
 	
 	//check user set into test mode
 	if (!CHECK_TEST_ENABLE(ts->current_test_mode))
@@ -876,11 +870,11 @@ static void clear_all_up(struct cyttsp *ts)
 				mt_sync_func(ts->input);
 			
 			/*FIH-MTD-PERIPHERAL-CH-2020-00++[*/
-			DBG_INFO("%s: T_ID:%3d Z:%3d   X:%3d Y:%3d\n", __func__,
+			/*DBG_INFO("%s: T_ID:%3d Z:%3d   X:%3d Y:%3d\n", __func__,
 				id,
 				CY_NTCH,
 				ts->prv_mt_pos[ts->pre_id[id]][CY_XPOS],
-				ts->prv_mt_pos[ts->pre_id[id]][CY_YPOS]);
+				ts->prv_mt_pos[ts->pre_id[id]][CY_YPOS]);*/
 			/*FIH-MTD-PERIPHERAL-CH-2020-00++]*/
 		
 			ts->act_trk[id] = CY_NTCH;
@@ -899,8 +893,6 @@ static void cyttsp_xy_worker(struct work_struct *work)
 	struct cyttsp_track_data trc;
 	s32 retval=-1;/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-02++*/
 
-	DBG_MSG("%s: Enter\n", __func__);
-	
 	memset(&trc,0,sizeof(trc));/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-01++*/
 
 	/* get event data from CYTTSP device */
@@ -1028,7 +1020,6 @@ static void cyttsp_xy_worker(struct work_struct *work)
 				(trc.cur_tch > CY_NUM_MT_TCH_ID)))
 		{
 			/*FIH-MTD-PERIPHERAL-CH-TRACKING_ID-00++[*/
-			DBG_INFO("EXIT WORKER for no new touch prv=%d cur=%d \n",trc.prv_tch,trc.cur_tch);
 			clear_all_up(ts);
 			goto exit_xy_worker;
 			/*FIH-MTD-PERIPHERAL-CH-TRACKING_ID-00++]*/
@@ -1046,7 +1037,7 @@ static void cyttsp_xy_worker(struct work_struct *work)
 	memset(trc.cur_mt_pos, CY_NTCH, sizeof(trc.cur_mt_pos));
 	memset(trc.cur_mt_z, CY_NTCH, sizeof(trc.cur_mt_z));
 
-#if DEBUG	
+#ifdef DEBUG	
 	if (trc.cur_tch) 
 	{
 		unsigned i;
@@ -1267,19 +1258,16 @@ static void cyttsp_to_timer(unsigned long handle)
 
 static void cyttsp_setup_to_timer(struct cyttsp *ts)
 {
-	DBG_MSG("%s: Enter\n", __func__);
 	setup_timer(&ts->to_timer, cyttsp_to_timer, (unsigned long) ts);
 }
 #endif /*FIH-MTD-PERIPHERAL-CH-soft_reset-00++*/
 static void cyttsp_kill_to_timer(struct cyttsp *ts)
 {
-	DBG_MSG("%s: Enter\n", __func__);
 	del_timer(&ts->to_timer);
 }
 #ifdef CYTTSP_SOFT_RESET /*FIH-MTD-PERIPHERAL-CH-soft_reset-00++*/
 static void cyttsp_start_to_timer(struct cyttsp *ts, int ms)
 {
-	DBG_MSG("%s: Enter\n", __func__);
 	ts->to_timeout = false;
 	mod_timer(&ts->to_timer, jiffies + ms);
 }
@@ -1303,7 +1291,6 @@ static irqreturn_t cyttsp_bl_ready_irq(int irq, void *handle)
 
 static void cyttsp_set_bl_ready(struct cyttsp *ts, bool set)
 {
-	DBG_INFO("%s: Enter\n", __func__);
 	ts->bl_ready = set;
 	printk(KERN_INFO"%s: bl_ready=%d\n", __func__, (int)ts->bl_ready);
 }
@@ -1321,7 +1308,6 @@ static int cyttsp_load_bl_regs(struct cyttsp *ts)
 {
 	int retval=-1;/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-02++*/
 
-	DBG_MSG("%s: Enter\n", __func__);
 
 	retval =  ttsp_read_block_data(ts, CY_REG_BASE,
 				sizeof(ts->bl_data), &(ts->bl_data));
@@ -1389,14 +1375,12 @@ static bool cyttsp_bl_app_valid(struct cyttsp *ts)
 #ifdef CYTTSP_SOFT_RESET /*FIH-MTD-PERIPHERAL-CH-soft_reset-00++*/
 static bool cyttsp_bl_status(struct cyttsp *ts)
 {
-	DBG_MSG("%s: Enter\n", __func__);
 	return ((ts->bl_data.bl_status == 0x10) ||
 		(ts->bl_data.bl_status == 0x11));
 }
 #endif /*FIH-MTD-PERIPHERAL-CH-soft_reset-00++*/
 static bool cyttsp_bl_err_status(struct cyttsp *ts)
 {
-	DBG_MSG("%s: Enter\n", __func__);
 	return (((ts->bl_data.bl_status == 0x10) &&
 		(ts->bl_data.bl_error == 0x20)) ||
 		((ts->bl_data.bl_status == 0x11) &&
@@ -1411,9 +1395,6 @@ static bool cyttsp_wait_bl_ready(struct cyttsp *ts,
 	int tries=0;/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-02++*/
 	bool rdy = false, tmo = false;
 
-	DBG_INFO("%s: Enter\n", __func__);
-	DBG_INFO("%s: pre-dly=%d loop-dly=%d, max-try=%d\n",
-		__func__, pre_delay, loop_delay, max_try);
 
 	tries = 0;
 	ts->bl_data.bl_file = 0;
@@ -1456,8 +1437,6 @@ static int cyttsp_exit_bl_mode(struct cyttsp *ts)
 	int retval=-1;/*FIH-MTD-PERIPHERAL-CH-CODE_DEFECT-02++*/
 	int tries = 0;
 
-	DBG_MSG("%s: Enter\n", __func__);
-
 	/* check if in bootloader mode;
 	 * if in operational mode then just return without fail
 	 */
@@ -1499,8 +1478,6 @@ static int cyttsp_set_sysinfo_mode(struct cyttsp *ts)
 	u8 cmd_temp=0;
 	/*FIH-MTD-PERIPHERAL-CH-2020-00++]*/
 	int temp_ver=0; /*FIH-MTD-PERIPHERAL-CH-APP_VER-00++*/
-
-	DBG_MSG("%s: Enter\n", __func__);
 
 	memset(&(ts->sysinfo_data), 0, sizeof(struct cyttsp_sysinfo_data));
 	
@@ -1628,8 +1605,6 @@ static int cyttsp_set_operational_mode(struct cyttsp *ts)
 	//u8 gest_default; //SW1D3-Peripheral-OH-Cypress(TMA340)_TouchDriver_Porting-00-
 	struct cyttsp_xydata xy_data;
 
-	DBG_MSG(KERN_INFO"%s: Enter\n", __func__);
-
 	memset(&(xy_data), 0, sizeof(xy_data));
 
 /*FIH-MTD-PERIPHERAL-CH-2020-00++[*/
@@ -1703,7 +1678,6 @@ static int cyttsp_soft_reset(struct cyttsp *ts, bool *status)
 	u8 cmd_temp = 0;
 /*FIH-MTD-PERIPHERAL-CH-2020-00++]*/
 
-	DBG_INFO("%s: Enter\n", __func__);
 	ts->op_mode = false;/*FIH-SW-PERIPHERAL-CH-Feature_Change-00++*/
 	/* reset TTSP Device back to bootloader mode */
 	if (!cyttsp_check_polling(ts)) {
@@ -1771,10 +1745,6 @@ static int cyttsp_loader(struct cyttsp *ts)
 {
 	void *fptr = cyttsp_bl_err_status;	/* kill warning */
 
-	if (ts) {
-		DBG_MSG("%s: Enter\n", __func__);
-		DBG_MSG("%s: Exit\n", __func__);
-	}
 
 	if (!fptr)
 		return -EIO;
@@ -1802,7 +1772,6 @@ static int cyttsp_power_on(struct cyttsp *ts)
 #endif
 /*FIH-MTD-PERIPHERAL-CH-Change_Mode-00++]*/
 
-	DBG_INFO("%s: Enter\n", __func__);
 
 	ts->platform_data->power_state = CY_IDLE_STATE;
 
@@ -1922,7 +1891,6 @@ static int cyttsp_resume(struct cyttsp *ts)
 	int retval = 0;
 	struct cyttsp_xydata xydata;
 
-	DBG_MSG("%s: Enter\n", __func__);
 	input_mt_sync(ts->input);/*FIH-SW-PERIPHERAL-CH-Feature_Change-00++*/
 	if (ts->platform_data->use_sleep && (ts->platform_data->power_state !=
 		CY_ACTIVE_STATE)) {
@@ -1944,8 +1912,8 @@ static int cyttsp_resume(struct cyttsp *ts)
 					CY_ACTIVE_STATE;
 		}
 	}
-	DBG_INFO("%s: Wake Up %s\n", __func__,
-		(retval < 0) ? "FAIL" : "PASS");
+	//DBG_INFO("%s: Wake Up %s\n", __func__,
+	//	(retval < 0) ? "FAIL" : "PASS");
 	
 	return retval;
 }
@@ -1956,7 +1924,6 @@ static int cyttsp_suspend(struct cyttsp *ts)
 	int retval = 0;
 	u8 cmd_temp = 0;/*FIH-MTD-PERIPHERAL-CH-2020-00*/
 
-	DBG_MSG("%s: Enter\n", __func__);
 	ts->op_mode=true;/*FIH-SW-PERIPHERAL-CH-Feature_Change-00++*/
 	if (ts->platform_data->use_sleep &&
 			(ts->platform_data->power_state == CY_ACTIVE_STATE)) {
@@ -1976,11 +1943,11 @@ static int cyttsp_suspend(struct cyttsp *ts)
 		if (!(retval < 0))
 			ts->platform_data->power_state = CY_SLEEP_STATE;
 	}
-	DBG_INFO("%s: Sleep Power state is %s\n", __func__,
+	/*DBG_INFO("%s: Sleep Power state is %s\n", __func__,
 		(ts->platform_data->power_state == CY_ACTIVE_STATE) ?
 		"ACTIVE" :
 		((ts->platform_data->power_state == CY_SLEEP_STATE) ?
-		"SLEEP" : "LOW POWER"));
+		"SLEEP" : "LOW POWER"));*/
 
 	return retval;
 }
@@ -1989,8 +1956,6 @@ static int cyttsp_suspend(struct cyttsp *ts)
 static void cyttsp_ts_early_suspend(struct early_suspend *h)
 {
 	struct cyttsp *ts = container_of(h, struct cyttsp, early_suspend);
-
-	DBG_INFO("%s: Enter\n", __func__);
 
 	LOCK(ts->mutex);
 	if (!ts->fw_loader_mode) {
@@ -2010,8 +1975,6 @@ static void cyttsp_ts_late_resume(struct early_suspend *h)
 {
 	struct cyttsp *ts = container_of(h, struct cyttsp, early_suspend);
 
-	DBG_INFO("%s: Enter\n", __func__);
-
 	LOCK(ts->mutex);
 	if (!ts->fw_loader_mode && ts->suspended) {
 		ts->suspended = 0;
@@ -2030,16 +1993,12 @@ static void cyttsp_ts_late_resume(struct early_suspend *h)
 
 static int cyttsp_wr_reg(struct cyttsp *ts, u8 reg_id, u8 reg_data)
 {
-
-	DBG_MSG("%s: Enter\n", __func__);
-
 	return ttsp_write_block_data(ts,
 		CY_REG_BASE + reg_id, sizeof(u8), &reg_data);
 }
 
 static int cyttsp_rd_reg(struct cyttsp *ts, u8 reg_id, u8 *reg_data)
 {
-	DBG_MSG("%s: Enter\n", __func__);
 	return ttsp_read_block_data(ts,
 		CY_REG_BASE + reg_id, sizeof(u8), reg_data);
 }
@@ -2097,8 +2056,6 @@ static ssize_t firmware_read(struct file *bin_file, struct kobject *kobj,
 	struct device *dev = container_of(kobj, struct device, kobj);
 	struct cyttsp *ts = dev_get_drvdata(dev);
 
-	DBG_INFO("%s: Enter (mode=%d)\n",
-		__func__, ts->fw_loader_mode);
 
 	LOCK(ts->mutex);
 	if (!ts->fw_loader_mode) {
@@ -2594,7 +2551,6 @@ static ssize_t attr_module_show(struct device *dev,
 	u8 cmd = 0x1D; /*reserved register used for this project*/
 	u8 data = 0;
 
-	DBG_MSG(KERN_INFO"%s: Enter\n", __func__);
 	retval = cyttsp_rd_reg(ts, cmd, &data);
 	if (retval < 0) {
 		DBG_ERR("%s: Failed resd block data, err:%d\n",
@@ -2628,8 +2584,6 @@ static ssize_t attr_reset_store(struct device *dev,
 	int ret=0;
 	char *p=NULL;
 	unsigned val = simple_strtoul(buf, &p, 10);
-
-	DBG_MSG(KERN_INFO"%s: Enter\n", __func__);
 	
 	ret = p - buf;
 	if (*p && isspace(*p))
@@ -2666,8 +2620,6 @@ static ssize_t attr_ESD_WORKAROUND(struct device *dev,
 	u8 cmd = 0x1B; /*reserved register used for this project ESD WORKAROUND*/
 	u8 data = 0;
 
-	DBG_MSG(KERN_INFO"%s: Enter\n", __func__);
-	
 	ret = p - buf;
 	if (*p && isspace(*p))
 		ret++;
@@ -2817,7 +2769,6 @@ static ssize_t attr_ESD_show(struct device *dev,
 	u8 cmd = 0x1B; /*reserved register used for this project*/
 	u8 data = 0;
 
-	DBG_MSG(KERN_INFO"%s: Enter\n", __func__);
 	if (ts->suspended)
 		goto get_ESD_suspend;/*FIH-MTD-PERIPHERAL-CH-ESD-02++*/
 	
@@ -2853,7 +2804,6 @@ int TOUCH_ESD_WORKAROUND(int enable)
 	u8 cmd = 0x1B; /*reserved register used for this project ESD WORKAROUND*/
 	u8 data = 0;
 
-	DBG_MSG(KERN_INFO"%s: Enter\n", __func__);
 	if (g_ts.suspended)
 		return -1;
 
@@ -3088,8 +3038,6 @@ void *cyttsp_core_init(struct cyttsp_bus_ops *bus_ops, struct device *pdev)
 	struct kobject *properties_kobj;
 #endif
 /*FIH-MTD-PERIPHERAL-CH-TRACKING_ID-00++]*/
-
-	DBG_INFO("Enter %s\n", __func__);
 
 #ifndef CONFIG_FIH_TOUCHSCREEN_CYTTSP_I2C_TMA340_ESD
 	ts = kzalloc(sizeof(*ts), GFP_KERNEL);
@@ -3437,7 +3385,6 @@ void cyttsp_core_release(void *handle)
 {
 	struct cyttsp *ts = handle;
 
-	DBG_INFO("%s: Enter\n", __func__);
 #ifdef CONFIG_HAS_EARLYSUSPEND
 	unregister_early_suspend(&ts->early_suspend);
 #endif

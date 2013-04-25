@@ -12,8 +12,8 @@ static void vibrator_control( struct vibrator_classdev *classdev, int state )
 
 	if( pmic_vib_mot_set_volt( state ? driver_data->level : 0 ) < 0 )
 		printk( KERN_ERR "VIB : Vibrator(%s) set voltage level failed\n", classdev->name );
-	else
-		printk( "VIB : Vibrator(%s) %s\n", classdev->name, state ? "on" : "off" );
+	//else
+	//	printk( "VIB : Vibrator(%s) %s\n", classdev->name, state ? "on" : "off" );
 }
 
 static void vibrator_level( struct vibrator_classdev *classdev, int level )
@@ -21,7 +21,7 @@ static void vibrator_level( struct vibrator_classdev *classdev, int level )
 	struct vib_driver_data	*driver_data	= container_of( classdev, struct vib_driver_data, classdev );
 
 	driver_data->level	= level;
-	printk( "VIB : Vibrator(%s), vibrator level(%d)\n", classdev->name, driver_data->level );
+	//printk( "VIB : Vibrator(%s), vibrator level(%d)\n", classdev->name, driver_data->level );
 }
 
 static int __devinit vibrator_probe(struct platform_device *pdev)

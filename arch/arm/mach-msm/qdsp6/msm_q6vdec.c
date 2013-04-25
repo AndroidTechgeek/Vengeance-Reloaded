@@ -15,6 +15,7 @@
 #define DEBUG_TRACE_VDEC
 #define DEBUG
 */
+#undef DEBUG
 
 #include <linux/slab.h>
 #include <linux/cdev.h>

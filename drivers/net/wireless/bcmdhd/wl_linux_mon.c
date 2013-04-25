@@ -52,7 +52,8 @@ extern int dhd_start_xmit(struct sk_buff *skb, struct net_device *net);
 /**
  * Local declarations and defintions (not exposed)
  */
-#define MON_PRINT(format, ...) printk("DHD-MON: %s " format, __func__, ##__VA_ARGS__)
+//#define MON_PRINT(format, ...) printk("DHD-MON: %s " format, __func__, ##__VA_ARGS__)
+#define MON_PRINT(format, ...) 
 #define MON_TRACE MON_PRINT
 
 typedef struct monitor_interface {
@@ -154,7 +155,7 @@ static int dhd_mon_if_stop(struct net_device *ndev)
 {
 	int ret = 0;
 
-	MON_PRINT("enter\n");
+	//MON_PRINT("enter\n");
 	return ret;
 }
 
@@ -173,7 +174,7 @@ static int dhd_mon_if_subif_start_xmit(struct sk_buff *skb, struct net_device *n
 	struct ieee80211_radiotap_header *rtap_hdr;
 	monitor_interface* mon_if;
 
-	MON_PRINT("enter\n");
+	//MON_PRINT("enter\n");
 
 	mon_if = ndev_to_monif(ndev);
 	if (mon_if == NULL || mon_if->real_ndev == NULL) {
@@ -192,7 +193,7 @@ static int dhd_mon_if_subif_start_xmit(struct sk_buff *skb, struct net_device *n
 	if (unlikely(skb->len < rtap_len))
 		goto fail;
 
-	MON_PRINT("radiotap len (should be 14): %d\n", rtap_len);
+	//MON_PRINT("radiotap len (should be 14): %d\n", rtap_len);
 
 	/* Skip the ratio tap header */
 	skb_pull(skb, rtap_len);
@@ -220,7 +221,7 @@ static int dhd_mon_if_subif_start_xmit(struct sk_buff *skb, struct net_device *n
 		memcpy(pdata, dst_mac_addr, sizeof(dst_mac_addr));
 		memcpy(pdata + sizeof(dst_mac_addr), src_mac_addr, sizeof(src_mac_addr));
 
-		MON_PRINT("if name: %s, matched if name %s\n", ndev->name, mon_if->real_ndev->name);
+		//MON_PRINT("if name: %s, matched if name %s\n", ndev->name, mon_if->real_ndev->name);
 
 		/* Use the real net device to transmit the packet */
 		ret = dhd_start_xmit(skb, mon_if->real_ndev);
@@ -240,8 +241,8 @@ static void dhd_mon_if_set_multicast_list(struct net_device *ndev)
 	if (mon_if == NULL || mon_if->real_ndev == NULL) {
 		MON_PRINT(" cannot find matched net dev, skip the packet\n");
 	} else {
-		MON_PRINT("enter, if name: %s, matched if name %s\n",
-		ndev->name, mon_if->real_ndev->name);
+		;/*MON_PRINT("enter, if name: %s, matched if name %s\n",
+		ndev->name, mon_if->real_ndev->name);*/
 	}
 }
 
@@ -254,8 +255,8 @@ static int dhd_mon_if_change_mac(struct net_device *ndev, void *addr)
 	if (mon_if == NULL || mon_if->real_ndev == NULL) {
 		MON_PRINT(" cannot find matched net dev, skip the packet\n");
 	} else {
-		MON_PRINT("enter, if name: %s, matched if name %s\n",
-		ndev->name, mon_if->real_ndev->name);
+		;/*MON_PRINT("enter, if name: %s, matched if name %s\n",
+		ndev->name, mon_if->real_ndev->name);*/
 	}
 	return ret;
 }
@@ -274,7 +275,7 @@ int dhd_add_monitor(char *name, struct net_device **new_ndev)
 
 	mutex_lock(&g_monitor.lock);
 
-	MON_TRACE("enter, if name: %s\n", name);
+	//MON_TRACE("enter, if name: %s\n", name);
 	if (!name || !new_ndev) {
 		MON_PRINT("invalid parameters\n");
 		ret = -EINVAL;
