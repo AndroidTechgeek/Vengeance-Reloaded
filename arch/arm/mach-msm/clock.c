@@ -394,12 +394,13 @@ static int __init clock_late_init(void)
 	unsigned long flags;
 	int ret = 0;
 
-	clock_debug_init(clk_init_data);
+	// clock_debug_init(clk_init_data);
 	for (n = 0; n < clk_init_data->size; n++) {
 		struct clk *clk = clk_init_data->table[n].clk;
 		bool handoff = false;
 
-		clock_debug_add(clk);
+	//	clock_debug_add(clk);
+
 		if (!(clk->flags & CLKFLAG_SKIP_AUTO_OFF)) {
 			spin_lock_irqsave(&clk->lock, flags);
 			if (!clk->count && clk->ops->auto_off) {

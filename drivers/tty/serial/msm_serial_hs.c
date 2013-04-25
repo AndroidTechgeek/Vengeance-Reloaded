@@ -355,26 +355,6 @@ static int msm_serial_loopback_enable_get(void *data, u64 *val)
 DEFINE_SIMPLE_ATTRIBUTE(loopback_enable_fops, msm_serial_loopback_enable_get,
 			msm_serial_loopback_enable_set, "%llu\n");
 
-/*
- * msm_serial_hs debugfs node: <debugfs_root>/msm_serial_hs/loopback.<id>
- * writing 1 turns on internal loopback mode in HW. Useful for automation
- * test scripts.
- * writing 0 disables the internal loopback mode. Default is disabled.
- */
-static void __init msm_serial_debugfs_init(struct msm_hs_port *msm_uport,
-					   int id)
-{
-	char node_name[15];
-	snprintf(node_name, sizeof(node_name), "loopback.%d", id);
-	if (IS_ERR_OR_NULL(debugfs_create_file(node_name,
-					       S_IRUGO | S_IWUSR,
-					       debug_base,
-					       msm_uport,
-					       &loopback_enable_fops))) {
-		debugfs_remove_recursive(debug_base);
-	}
-}
-
 static int __devexit msm_hs_remove(struct platform_device *pdev)
 {
 
@@ -396,7 +376,6 @@ static int __devexit msm_hs_remove(struct platform_device *pdev)
 			dev_err(dev, "GPIO config error\n");
 
 	sysfs_remove_file(&pdev->dev.kobj, &dev_attr_clock.attr);
-	debugfs_remove_recursive(debug_base);
 
 	dma_unmap_single(dev, msm_uport->rx.mapped_cmd_ptr, sizeof(dmov_box),
 			 DMA_TO_DEVICE);
@@ -1963,15 +1942,11 @@ static int __init msm_serial_hs_init(void)
 		printk(KERN_ERR "%s failed to load\n", __FUNCTION__);
 		return ret;
 	}
-	debug_base = debugfs_create_dir("msm_serial_hs", NULL);
-	if (IS_ERR_OR_NULL(debug_base))
-		pr_info("msm_serial_hs: Cannot create debugfs dir\n");
 
 	ret = platform_driver_probe(&msm_serial_hs_platform_driver,
 					msm_hs_probe);
 	if (ret) {
 		printk(KERN_ERR "%s failed to load\n", __FUNCTION__);
-		debugfs_remove_recursive(debug_base);
 		uart_unregister_driver(&msm_hs_driver);
 		return ret;
 	}
