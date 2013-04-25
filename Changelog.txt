@@ -81,11 +81,14 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Optimize DeadLine
 > Remove + symbol from kernel version string
 > New boot pattern for all devices
-> Overall improved and stabilized
 
 >----Version 1.43----
+> Update Linaro GCC ( March release )
 > Remove Overclock for MSM7225A SoC
 > Remove Debugging s**ts
 > Add init.d support
+> Modify kernel version string
 > Salavage some RAM
 > Add frandom
+> O2 optimizations
+> Overall improved and stabilized
