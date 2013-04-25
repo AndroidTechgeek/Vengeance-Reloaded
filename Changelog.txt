@@ -34,11 +34,6 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Fixed Mesona : boot into ramdump mode
 > modules.zip : nls_utf8.ko, scsi_wait_scan.ko, md4.ko
 
->----Version 1.43----
-> Remove Overclock
-> Remove Debugging s**ts
-
-
 >----Version 1.34----
 > Based on 1.33
 > Compiled using stable CodeSourcery Toolchain
@@ -87,3 +82,10 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Remove + symbol from kernel version string
 > New boot pattern for all devices
 > Overall improved and stabilized
+
+>----Version 1.43----
+> Remove Overclock for MSM7225A SoC
+> Remove Debugging s**ts
+> Add init.d support
+> Salavage some RAM
+> Add frandom
