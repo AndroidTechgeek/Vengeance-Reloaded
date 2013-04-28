@@ -17,7 +17,7 @@ DHDCFLAGS += -DOOB_INTR_ONLY
 # Send out the null packet in period to keep the connection with AP
 DHDCFLAGS += -DKEEP_ALIVE
 # Debug flags
-DHDCFLAGS += -DBCMDBG -DSDTEST -DSHOW_EVENTS -DDHD_DEBUG
+DHDCFLAGS += -DBCMDBG -DSDTEST -DSHOW_EVENTS
 # For ICS build-in mode without module removing anymore
 DHDCFLAGS += -DENABLE_INSMOD_NO_FW_LOAD 
 # Enable PNO function in driver
