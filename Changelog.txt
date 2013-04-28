@@ -92,3 +92,8 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Add frandom
 > O2 optimizations
 > Overall improved and stabilized
+
+>----Version 1.45---
+> Linaro 4.8 Optimized
+> Frandm Script integrated in ramdisk
+> Add missing files to source and cleanup
