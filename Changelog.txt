@@ -97,3 +97,7 @@ Devices Supported ( MSM7x27 - 3.0.8 Linux kernel ):-
 > Linaro 4.8 Optimized
 > Frandm Script integrated in ramdisk
 > Add missing files to source and cleanup
+
+>----Version 1.46---
+> Autoroot with latest su 
+> Auto-Install busybox
